@@ -1,0 +1,699 @@
+.tarefaCard {
+  --cor-urgencia: 182 239 126;
+
+  position: relative;
+  isolation: isolate;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(8rem, 28%) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "imagem cabecalho"
+    "imagem descricao"
+    "imagem acoes";
+  gap: 0.7rem 1.2rem;
+  min-width: 0;
+  min-height: 12rem;
+  padding: 0.9rem;
+  border: 1px solid rgb(178 237 186 / 24%);
+  border-radius: 1rem;
+  background:
+    linear-gradient(
+      135deg,
+      rgb(55 143 77 / 72%) 0%,
+      rgb(55 143 77 / 58%) 60%,
+      rgb(var(--cor-urgencia) / 52%) 100%
+    ),
+    rgb(17 26 20 / 82%);
+  box-shadow:
+    0 0.65rem 1.5rem rgb(0 0 0 / 25%),
+    0 0.15rem 0.55rem rgb(var(--cor-urgencia) / 10%);
+  color: #f1f6f1;
+  backdrop-filter: blur(0.65rem);
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.tarefaCard[data-menu-aberto="true"] {
+  z-index: 10;
+}
+
+.tarefaCard::before,
+.tarefaCard::after {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  content: "";
+}
+
+.tarefaCard::before {
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
+  background: linear-gradient(
+    110deg,
+    #82f59b,
+    #e5f67b,
+    rgb(var(--cor-urgencia) / 95%),
+    #82f59b
+  );
+  background-size: 240% 100%;
+  opacity: 0;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  transition: opacity 180ms ease;
+}
+
+.tarefaCard::after {
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    110deg,
+    transparent 32%,
+    rgb(255 255 255 / 15%) 48%,
+    transparent 64%
+  );
+  background-size: 220% 100%;
+  background-position: 140% 0;
+  opacity: 0;
+}
+
+.tarefaCard:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 0.9rem 1.8rem rgb(0 0 0 / 32%),
+    0 0 1.15rem rgb(var(--cor-urgencia) / 30%);
+}
+
+.tarefaCard:hover::before {
+  opacity: 1;
+  animation: contornoBrilhante 1.6s linear infinite;
+}
+
+.tarefaCard:hover::after {
+  opacity: 1;
+  animation: feixeDeLuz 900ms ease-out;
+}
+
+.tarefaCard[data-urgencia="vida-ou-morte"] {
+  --cor-urgencia: 190 143 255;
+}
+
+.tarefaCard[data-urgencia="melhor-apressar"] {
+  --cor-urgencia: 255 213 105;
+}
+
+.tarefaCard[data-urgencia="amanha-eu-faco"] {
+  --cor-urgencia: 115 225 157;
+}
+
+.tarefaCard__imagem {
+  position: relative;
+  overflow: hidden;
+  grid-area: imagem;
+  min-height: 0;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 0.7rem;
+  background: linear-gradient(
+    145deg,
+    rgb(var(--cor-urgencia) / 28%),
+    transparent 68%
+  );
+  background-position: center;
+  background-size: cover;
+}
+
+.tarefaCard__imagemArquivo {
+  object-fit: cover;
+  filter: brightness(0.72);
+}
+
+.tarefaCard__conteudo {
+  display: contents;
+}
+
+.tarefaCard__cabecalho {
+  grid-area: cabecalho;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.tarefaCard__nome {
+  min-width: 0;
+  margin: 0;
+  color: #f5fff5;
+  font-size: clamp(1.25rem, 2.3vw, 1.65rem);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.tarefaCard__edicaoNome {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.tarefaCard__inputEdicao,
+.tarefaCard__textareaEdicao {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  border: 1px solid rgb(200 255 204 / 45%);
+  border-radius: 0.45rem;
+  background: rgb(8 18 11 / 55%);
+  color: #f5fff5;
+  font: inherit;
+}
+
+.tarefaCard__inputEdicao {
+  padding: 0.45rem 0.6rem;
+}
+
+.tarefaCard__inputEdicao:focus-visible,
+.tarefaCard__textareaEdicao:focus-visible {
+  border-color: rgb(200 255 204 / 80%);
+  outline: 2px solid rgb(200 255 204 / 45%);
+  outline-offset: 1px;
+}
+
+.tarefaCard__inputEdicaoInvalido,
+.tarefaCard__inputEdicaoInvalido:focus-visible {
+  border-color: #ff8585;
+}
+
+.tarefaCard__erroNome {
+  display: block;
+  margin-top: 0.25rem;
+  color: #ffc1c1;
+  font-size: 0.8rem;
+}
+
+.tarefaCard__botoesEdicao {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.35rem;
+}
+
+.tarefaCard__acaoMenu {
+  padding: 0.55rem 0.7rem;
+  border: 0;
+  border-radius: 0.35rem;
+  background: transparent;
+  color: #f1f6f1;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.tarefaCard__acaoMenu:hover,
+.tarefaCard__acaoMenu:focus-visible {
+  outline: none;
+  background: rgb(255 255 255 / 10%);
+  color: #d8ff9a;
+}
+
+.tarefaCard__textareaEdicao {
+  grid-area: descricao;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.5rem;
+  background: rgb(8 18 11 / 38%);
+  color: #f1f6f1;
+  resize: vertical;
+}
+
+.tarefaCard__opcoes {
+  display: grid;
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: rgb(8 18 11 / 35%);
+  color: #e8f6e9;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.tarefaCard__opcoes:hover,
+.tarefaCard__opcoes:focus-visible {
+  border-color: rgb(200 255 204 / 55%);
+  outline: none;
+  background: rgb(8 18 11 / 70%);
+  color: #d8ff9a;
+}
+
+.tarefaCard__opcoesContainer {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.tarefaCard__menuAcoes {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  right: 0;
+  z-index: 5;
+  display: grid;
+  gap: 0.25rem;
+  min-width: 9rem;
+  padding: 0.4rem;
+  border: 1px solid rgb(133 221 151 / 28%);
+  border-radius: 0.65rem;
+  background: #111a14;
+  box-shadow: 0 0.65rem 1.5rem rgb(0 0 0 / 35%);
+}
+
+.tarefaCard__menuAcoesAberto {
+  display: grid;
+}
+
+.tarefaCard__menuAcoesFechado {
+  display: none;
+}
+
+.tarefaCard__descricao {
+  grid-area: descricao;
+  align-self: start;
+  margin: 0;
+  color: rgb(237 247 237 / 90%);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.tarefaCard__verDescricao {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #d8ff9a;
+  font: inherit;
+  font-size: 0.9em;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.tarefaCard__verDescricao:hover,
+.tarefaCard__verDescricao:focus-visible {
+  color: #fff;
+}
+
+.tarefaCard__acoes {
+  grid-area: acoes;
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.tarefaCard__seletorUrgencia {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.tarefaCard__urgencia {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  min-height: 2rem;
+  padding: 0.28rem 0.55rem 0.28rem 0.65rem;
+  border: 1px solid rgb(var(--cor-urgencia) / 50%);
+  border-radius: 999px;
+  background: rgb(10 19 13 / 42%);
+  color: rgb(var(--cor-urgencia) / 100%);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.015em;
+  cursor: default;
+}
+
+.tarefaCard__urgencia > span:first-child {
+  white-space: nowrap;
+}
+
+.tarefaCard__controlesUrgencia {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  gap: 0.45rem;
+}
+
+.tarefaCard__divisorUrgencia {
+  width: 1px;
+  align-self: stretch;
+  background: rgb(var(--cor-urgencia) / 65%);
+}
+
+.tarefaCard__setaUrgencia {
+  display: grid;
+  width: 1.7rem;
+  min-height: 1.6rem;
+  place-items: center;
+  border: 0;
+  border-radius: 0 999px 999px 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.tarefaCard__setaUrgencia:hover,
+.tarefaCard__setaUrgencia:focus-visible {
+  outline: none;
+  background: rgb(var(--cor-urgencia) / 12%);
+}
+
+.tarefaCard__setaUrgencia > span {
+  width: 0;
+  height: 0;
+  border-top: 0.32rem solid rgb(var(--cor-urgencia) / 100%);
+  border-right: 0.28rem solid transparent;
+  border-left: 0.28rem solid transparent;
+}
+
+.tarefaCard__menuUrgencia {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  z-index: 6;
+  display: grid;
+  gap: 0.2rem;
+  min-width: 100%;
+  width: max-content;
+  padding: 0.35rem;
+  border: 1px solid rgb(var(--cor-urgencia) / 55%);
+  border-radius: 0.7rem;
+  background: linear-gradient(
+    145deg,
+    rgb(35 62 42 / 98%),
+    rgb(13 22 16 / 98%)
+  );
+  box-shadow:
+    0 0.7rem 1.5rem rgb(0 0 0 / 42%),
+    0 0 0.75rem rgb(var(--cor-urgencia) / 14%);
+  backdrop-filter: blur(0.7rem);
+}
+
+.tarefaCard__opcaoUrgencia {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid transparent;
+  border-radius: 0.45rem;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.tarefaCard__opcaoUrgencia[data-urgencia="vida-ou-morte"] {
+  color: #d4b2ff;
+}
+
+.tarefaCard__opcaoUrgencia[data-urgencia="melhor-apressar"] {
+  color: #ffe18a;
+}
+
+.tarefaCard__opcaoUrgencia[data-urgencia="amanha-eu-faco"] {
+  color: #a6f0bb;
+}
+
+.tarefaCard__opcaoUrgencia:hover,
+.tarefaCard__opcaoUrgencia:focus-visible {
+  outline: none;
+  background: rgb(255 255 255 / 10%);
+}
+
+.tarefaCard__opcaoUrgencia[aria-pressed="true"] {
+  border-color: rgb(var(--cor-urgencia) / 32%);
+  background: rgb(var(--cor-urgencia) / 16%);
+}
+
+.tarefaCard__status {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-grid;
+  min-width: 8.5rem;
+  min-height: 2.55rem;
+  padding: 0.55rem 1rem;
+  place-items: center;
+  border: 1px solid rgb(169 241 177 / 55%);
+  border-radius: 999px;
+  background: rgb(8 18 11 / 35%);
+  color: #d9e4d9;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.tarefaCard__status::before,
+.tarefaCard__status::after {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.tarefaCard__status::before {
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, rgb(112 202 127 / 78%), rgb(139 255 157 / 48%));
+}
+
+.tarefaCard__status::after {
+  transform: scaleX(0);
+  transform-origin: right;
+  background: linear-gradient(90deg, rgb(238 74 74 / 82%), rgb(255 116 83 / 58%));
+}
+
+.tarefaCard__status > span {
+  position: relative;
+  z-index: 1;
+}
+
+.tarefaCard__status:hover,
+.tarefaCard__status:focus-visible {
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.tarefaCard[data-status="concluida"] .tarefaCard__status {
+  border-color: rgb(194 255 130 / 75%);
+  box-shadow: inset 0 0 0.5rem rgb(139 255 157 / 10%);
+  color: #edffc9;
+}
+
+.tarefaCard[data-status="concluida"] .tarefaCard__status::before {
+  transform: scaleX(1);
+}
+
+.tarefaCard[data-status="pendente"] .tarefaCard__status {
+  border-color: rgb(255 125 104 / 55%);
+  box-shadow: 0 0 0.7rem rgb(255 92 75 / 18%);
+}
+
+.tarefaCard[data-status="concluida"]:not([data-status-clicado="true"]) .tarefaCard__status:hover,
+.tarefaCard[data-status="concluida"]:not([data-status-clicado="true"]) .tarefaCard__status:focus-visible {
+  border-color: rgb(255 125 104 / 85%);
+  box-shadow: 0 0 0.9rem rgb(255 92 75 / 42%);
+}
+
+.tarefaCard[data-status="concluida"]:not([data-status-clicado="true"]) .tarefaCard__status:hover::before,
+.tarefaCard[data-status="concluida"]:not([data-status-clicado="true"]) .tarefaCard__status:focus-visible::before {
+  animation: esvaziarConcluida 700ms ease-in-out forwards;
+}
+
+.tarefaCard[data-status="concluida"]:not([data-status-clicado="true"]) .tarefaCard__status:hover::after,
+.tarefaCard[data-status="concluida"]:not([data-status-clicado="true"]) .tarefaCard__status:focus-visible::after {
+  animation: tornarPendente 700ms ease-in-out forwards;
+}
+
+.tarefaCard[data-status="pendente"]:not([data-status-clicado="true"]) .tarefaCard__status:hover::before,
+.tarefaCard[data-status="pendente"]:not([data-status-clicado="true"]) .tarefaCard__status:focus-visible::before {
+  animation: concluirPendente 700ms ease-in-out forwards;
+}
+
+.tarefaCard[data-status="pendente"]:not([data-status-clicado="true"]) .tarefaCard__status:hover,
+.tarefaCard[data-status="pendente"]:not([data-status-clicado="true"]) .tarefaCard__status:focus-visible {
+  border-color: rgb(139 255 157 / 80%);
+  box-shadow: 0 0 0.9rem rgb(139 255 157 / 30%);
+}
+
+@media (min-width: 960px) {
+  :global([data-colunas="2"]) .tarefaCard {
+    grid-template-columns: minmax(7rem, 30%) minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "imagem cabecalho"
+      "imagem descricao"
+      "acoes acoes";
+    min-height: 18rem;
+  }
+
+  :global([data-colunas="2"]) .tarefaCard__acoes {
+    display: flex;
+    grid-column: 1 / -1;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 640px) {
+  .tarefaCard {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 13rem auto auto;
+    grid-template-areas:
+      "imagem"
+      "descricao"
+      "acoes";
+    gap: 0.8rem;
+    min-height: 0;
+    padding: 0.7rem;
+    background: linear-gradient(
+      90deg,
+      rgb(55 143 77 / 74%) 0%,
+      rgb(55 143 77 / 58%) 60%,
+      rgb(var(--cor-urgencia) / 52%) 100%
+    ), rgb(17 26 20 / 82%);
+  }
+
+  .tarefaCard__imagem {
+    width: 100%;
+    height: 13rem;
+    min-height: 0;
+    background: linear-gradient(
+      90deg,
+      rgb(15 25 18 / 25%),
+      rgb(15 25 18 / 72%)
+    );
+    background-position: center;
+    background-size: cover;
+  }
+
+  .tarefaCard__cabecalho {
+    position: relative;
+    grid-area: imagem;
+    z-index: 4;
+    align-self: end;
+    align-items: flex-end;
+    margin: 0.75rem;
+    text-shadow: 0 1px 0.5rem rgb(0 0 0 / 85%);
+  }
+
+  .tarefaCard__nome {
+    font-size: 1.35rem;
+  }
+
+  .tarefaCard__opcoes {
+    background: rgb(8 18 11 / 68%);
+  }
+
+  .tarefaCard__acoes {
+    display: contents;
+  }
+
+  .tarefaCard__seletorUrgencia {
+    grid-area: imagem;
+    position: relative;
+    z-index: 5;
+    align-self: start;
+    justify-self: end;
+    margin: 0.8rem;
+  }
+
+  .tarefaCard__status {
+    grid-area: acoes;
+    min-height: 2.6rem;
+    width: 100%;
+  }
+}
+
+@keyframes contornoBrilhante {
+  from {
+    background-position: 0% 50%;
+  }
+
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes feixeDeLuz {
+  from {
+    background-position: 140% 0;
+  }
+
+  to {
+    background-position: -80% 0;
+  }
+}
+
+@keyframes concluirPendente {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes tornarPendente {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes esvaziarConcluida {
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tarefaCard,
+  .tarefaCard__opcoes,
+  .tarefaCard__status {
+    transition: none;
+  }
+
+  .tarefaCard:hover {
+    transform: none;
+  }
+
+  .tarefaCard:hover::before,
+  .tarefaCard:hover::after,
+  .tarefaCard__status:hover::before,
+  .tarefaCard__status:hover::after,
+  .tarefaCard__status:focus-visible::before,
+  .tarefaCard__status:focus-visible::after {
+    animation: none;
+  }
+}

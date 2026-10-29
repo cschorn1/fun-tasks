@@ -1,0 +1,156 @@
+﻿.header {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 5.25rem;
+  padding: 1rem clamp(1.25rem, 5vw, 4rem);
+  background-color: #111a14;
+  box-shadow: 0 0.5rem 1.25rem rgb(0 0 0 / 24%);
+}
+
+.header::after {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #53d982 0%,
+    #b5f27a 35%,
+    #f3df70 58%,
+    #72e99a 82%,
+    #53d982 100%
+  );
+  background-size: 220% 100%;
+  animation: borderFlow 2.5s ease-in-out infinite alternate;
+  content: "";
+}
+
+.brand {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.08em;
+  padding: 0.1em 0.16em;
+  border-radius: 0.2em;
+  color: #f1f6f1;
+  font-size: clamp(1.8rem, 4vw, 2.35rem);
+  font-weight: 800;
+  line-height: 1.15;
+  text-decoration: none;
+  transition:
+    transform 220ms ease,
+    filter 220ms ease;
+}
+
+.brand:hover,
+.brand:focus-visible {
+  transform: translateY(-2px) scale(1.035);
+  filter: drop-shadow(0 0 0.55rem rgb(100 235 145 / 38%));
+}
+
+.brand:focus-visible {
+  outline: 2px solid #8ceba5;
+  outline-offset: 4px;
+}
+
+.fun,
+.tasks {
+  background-image:
+    linear-gradient(
+      105deg,
+      transparent 0%,
+      transparent 43%,
+      rgb(255 255 255 / 10%) 47%,
+      rgb(224 255 232 / 82%) 49%,
+      #fff 50%,
+      rgb(224 255 232 / 82%) 51%,
+      rgb(255 255 255 / 10%) 53%,
+      transparent 57%,
+      transparent 100%
+    ),
+    linear-gradient(180deg, #b9f1c4 0%, #78d88f 100%);
+  background-repeat: no-repeat;
+  background-position:
+    100% 50%,
+    0 0;
+  background-size:
+    280% 100%,
+    100% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand:hover .fun,
+.brand:focus-visible .fun {
+  animation: letterShine 720ms ease-out;
+}
+
+.brand:hover .tasks,
+.brand:focus-visible .tasks {
+  animation: letterShine 720ms 260ms ease-out;
+}
+
+.fun {
+  font-family: "Trebuchet MS", "Arial Rounded MT Bold", sans-serif;
+  font-style: normal;
+  letter-spacing: -0.07em;
+}
+
+.tasks {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: -0.06em;
+}
+
+@keyframes borderFlow {
+  from {
+    background-position: 0% 50%;
+  }
+
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes letterShine {
+  from {
+    background-position:
+      100% 50%,
+      0 0;
+  }
+
+  to {
+    background-position:
+      -100% 50%,
+      0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header::after {
+    animation: none;
+  }
+
+  .brand {
+    transition: none;
+  }
+
+  .brand:hover,
+  .brand:focus-visible {
+    transform: none;
+  }
+
+  .brand:hover .fun,
+  .brand:hover .tasks,
+  .brand:focus-visible .fun,
+  .brand:focus-visible .tasks {
+    animation: none;
+  }
+}

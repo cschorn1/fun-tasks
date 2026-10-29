@@ -1,43 +1,71 @@
-# Next.js + Jest
+# FunTasks
 
-This example shows how to configure Jest to work with Next.js.
+Aplicação de lista de tarefas criada com Next.js, App Router, React e TypeScript. O projeto foi desenvolvido como prática de componentes reutilizáveis, estado no cliente, hooks personalizados e testes unitários.
 
-This includes Next.js' built-in support for Global CSS, CSS Modules and TypeScript. This example also shows how to use Jest with the App Router and React Server Components.
+## Funcionalidades
 
-> **Note:** Since tests can be co-located alongside other files inside the App Router, we have placed those tests in `app/` to demonstrate this behavior (which is different than `pages/`). You can still place all tests in `__tests__` if you prefer.
+- Criar tarefas com nome obrigatório, descrição opcional e urgência.
+- Editar o nome e a descrição no próprio card.
+- Alterar a urgência pelo seletor do card.
+- Marcar tarefas como concluídas ou pendentes.
+- Excluir tarefas criadas pela aplicação. As tarefas simuladas não podem ser excluídas.
+- Filtrar por todas, concluídas ou pendentes.
+- Organizar por urgência ou data de criação.
+- Alternar entre uma e duas colunas em telas grandes.
+- Consultar a quantidade atual de tarefas com o hook `useContadorDeTarefas`.
 
-## Deploy your own
+As tarefas iniciais vêm de `app/data/tarefasMockadas.ts`. A lista de tarefas é salva no `localStorage` do navegador, então as alterações continuam disponíveis após recarregar a página no mesmo navegador. O projeto ainda não usa banco de dados nem sincroniza os dados entre dispositivos ou navegadores.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-jest&project-name=with-jest&repository-name=with-jest)
+## Requisitos
 
-## How to Use
+- Node.js e npm instalados.
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+## Instalação e execução
+
+Instale as dependências:
 
 ```bash
-npx create-next-app --example with-jest with-jest-app
+npm install
 ```
+
+Inicie o servidor de desenvolvimento:
 
 ```bash
-yarn create next-app --example with-jest with-jest-app
+npm run dev
 ```
+
+Abra [http://localhost:3000](http://localhost:3000) no navegador.
+
+Para gerar a versão de produção:
 
 ```bash
-pnpm create next-app --example with-jest with-jest-app
+npm run build
+npm run start
 ```
 
-## Running Tests
+## Testes
+
+O projeto usa Jest e React Testing Library. Para executar os testes uma vez:
+
+```bash
+npm run test:ci
+```
+
+Para executar Jest em modo de observação:
 
 ```bash
 npm test
 ```
 
-```bash
-yarn test
-```
+## Organização principal
 
-```bash
-pnpm test
+```text
+app/
+  components/       Componentes da interface e gerenciamento das tarefas
+  data/             Tarefas simuladas
+  hooks/            Hooks personalizados
+  types/            Tipos TypeScript compartilhados
+  page.tsx          Página principal (Server Component)
+__tests__/          Testes automatizados
+public/images/      Imagens usadas nos cards
 ```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).

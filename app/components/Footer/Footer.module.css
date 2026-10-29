@@ -1,0 +1,132 @@
+﻿.footer {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  padding: 1.5rem clamp(1.25rem, 5vw, 4rem);
+  background-color: #111a14;
+  color: #f1f6f1;
+  box-shadow: 0 -0.5rem 1.25rem rgb(0 0 0 / 24%);
+}
+
+.footer::before {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #53d982 0%,
+    #b5f27a 35%,
+    #f3df70 58%,
+    #72e99a 82%,
+    #53d982 100%
+  );
+  background-size: 220% 100%;
+  animation: borderFlow 2.5s ease-in-out infinite alternate;
+  content: "";
+}
+
+.logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: 5.5rem;
+  height: 5.5rem;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+  opacity: 0.5;
+  pointer-events: none;
+  filter: drop-shadow(0 0 0.45rem rgb(83 217 130 / 28%));
+}
+
+.copyright {
+  color: #dce8de;
+  font-size: 0.9rem;
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 0.85rem;
+  font-size: 0.9rem;
+}
+
+.contact > p {
+  color: #dce8de;
+}
+
+.socialLinks {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.socialLink {
+  color: #b9f1c4;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    transform 180ms ease,
+    text-shadow 180ms ease;
+}
+
+.socialLink:hover,
+.socialLink:focus-visible {
+  transform: translateY(-1px);
+  color: #f3df70;
+  text-shadow: 0 0 0.55rem rgb(243 223 112 / 35%);
+}
+
+.socialLink:focus-visible {
+  border-radius: 0.15rem;
+  outline: 2px solid #8ceba5;
+  outline-offset: 4px;
+}
+
+@keyframes borderFlow {
+  from {
+    background-position: 0% 50%;
+  }
+
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logo {
+    position: relative;
+    top: auto;
+    left: auto;
+    align-self: center;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer::before {
+    animation: none;
+  }
+
+  .socialLink {
+    transition: none;
+  }
+
+  .socialLink:hover,
+  .socialLink:focus-visible {
+    transform: none;
+  }
+}

@@ -1,0 +1,90 @@
+﻿.form {
+  display: grid;
+  gap: 1.25rem;
+  width: min(100% - 2rem, 38rem);
+  margin: clamp(2rem, 6vw, 4rem) auto;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid rgb(83 217 130 / 24%);
+  border-radius: 1rem;
+  background-color: #16231a;
+  box-shadow: 0 1rem 2.5rem rgb(0 0 0 / 18%);
+  color: #f1f6f1;
+}
+
+.field {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.label {
+  color: #c4f2ce;
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  border: 1px solid #3f6248;
+  border-radius: 0.65rem;
+  padding: 0.8rem 0.9rem;
+  background-color: #0f1712;
+  color: #f1f6f1;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.select {
+  cursor: pointer;
+}
+
+.input:focus-visible,
+.textarea:focus-visible,
+.select:focus-visible {
+  border-color: #78d88f;
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(83 217 130 / 20%);
+}
+
+.submit {
+  min-height: 3rem;
+  border: 0;
+  border-radius: 0.65rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(90deg, #53d982, #b5f27a);
+  color: #111a14;
+  font-weight: 750;
+  transition:
+    filter 180ms ease,
+    transform 180ms ease;
+}
+
+.submit:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
+.submit:focus-visible {
+  outline: 2px solid #f3df70;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .input,
+  .textarea,
+  .select,
+  .submit {
+    transition: none;
+  }
+
+  .submit:hover {
+    transform: none;
+  }
+}
