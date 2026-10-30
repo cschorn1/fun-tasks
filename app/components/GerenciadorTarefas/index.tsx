@@ -50,6 +50,7 @@ export default function GerenciadorTarefas({
         const dadosArmazenados: unknown = JSON.parse(tarefasSalvas);
 
         if (Array.isArray(dadosArmazenados)) {
+          // eslint-disable-next-line react-hooks/set-state-in-effect -- restaura as tarefas do localStorage após a hidratação no navegador.
           setTarefas(dadosArmazenados.filter(ehTarefa));
         }
       }

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { Tarefa, UrgenciaTarefa } from "../../types/tarefa";
 import styles from "./TarefaCard.module.css";
 
@@ -52,7 +52,7 @@ export default function TarefaCard({
   const [descricaoExpandida, setDescricaoExpandida] = useState(false);
   const [statusClicadoNoHover, setStatusClicadoNoHover] = useState(false);
   const [statusEmPrevia, setStatusEmPrevia] = useState(false);
-  const [urgenciaAtual, setUrgenciaAtual] = useState(tarefa.urgencia);
+  const urgenciaAtual = tarefa.urgencia;
   const estaConcluida = tarefa.status === "concluida";
   const textoStatus =
     statusEmPrevia && !statusClicadoNoHover
@@ -70,10 +70,6 @@ export default function TarefaCard({
       : descricao;
   const idMenu = `menu-tarefa-${tarefa.id}`;
   const idMenuUrgencia = `menu-urgencia-${tarefa.id}`;
-
-  useEffect(() => {
-    setUrgenciaAtual(tarefa.urgencia);
-  }, [tarefa.urgencia]);
 
   function iniciarEdicao() {
     setNomeEditado(tarefa.nome);
@@ -100,7 +96,6 @@ export default function TarefaCard({
   }
 
   function alterarUrgencia(urgencia: UrgenciaTarefa) {
-    setUrgenciaAtual(urgencia);
     onAlterarUrgencia?.(tarefa.id, urgencia);
     setSeletorUrgenciaAberto(false);
   }
