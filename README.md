@@ -2,6 +2,10 @@
 
 Aplicação de lista de tarefas criada com Next.js, App Router, React e TypeScript. O projeto foi desenvolvido como prática de componentes reutilizáveis, estado no cliente, hooks personalizados e testes unitários.
 
+## Aplicação publicada
+
+Acesse o FunTasks: [https://fun-tasks-pi.vercel.app/](https://fun-tasks-pi.vercel.app/).
+
 ## Funcionalidades
 
 - Criar tarefas com nome obrigatório, descrição opcional e urgência.
@@ -18,7 +22,7 @@ As tarefas iniciais vêm de `app/data/tarefasMockadas.ts`. A lista de tarefas é
 
 ## Requisitos
 
-- Node.js e npm instalados.
+- Node.js 24 e npm instalados.
 
 ## Instalação e execução
 
@@ -48,14 +52,22 @@ npm run start
 O projeto usa Jest e React Testing Library. Para executar os testes uma vez:
 
 ```bash
-npm run test:ci
+npm run test
 ```
 
-Para executar Jest em modo de observação:
+Para executar Jest em modo de observação enquanto desenvolve:
 
 ```bash
-npm test
+npm run test:watch
 ```
+
+## CI/CD
+
+O workflow do GitHub Actions está em `.github/workflows/main.yml`. Ele roda em pushes para `main`, em pull requests destinados a `main` e também pode ser iniciado manualmente pela aba **Actions**.
+
+O pipeline compila o projeto, executa o ESLint e os testes. Após essas verificações passarem, um push para `main` publica a aplicação na Vercel.
+
+O deploy usa os secrets `VERCEL_TOKEN`, `VERCEL_ORG_ID` e `VERCEL_PROJECT_ID`, configurados nas opções **Settings → Secrets and variables → Actions** do repositório. Os valores não devem ser adicionados ao código do projeto.
 
 ## Organização principal
 
