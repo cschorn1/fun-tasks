@@ -21,17 +21,7 @@
     0 1rem 2.2rem rgb(0 0 0 / 16%),
     inset 0 1px 0 rgb(215 255 220 / 7%);
   backdrop-filter: blur(0.5rem);
-  animation: fundoVerdeVertical 8s ease-in-out infinite alternate;
-}
-
-@keyframes fundoVerdeVertical {
-  from {
-    background-position: 0 0%;
-  }
-
-  to {
-    background-position: 0 100%;
-  }
+  background-position: 0 50%;
 }
 
 .listaTarefas__titulo {
@@ -324,11 +314,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .listaTarefas {
-    background-position: 0 50%;
-    animation: none;
-  }
-
   .listaTarefas__botaoVisualizacao,
   .listaTarefas__filtro {
     transition: none;

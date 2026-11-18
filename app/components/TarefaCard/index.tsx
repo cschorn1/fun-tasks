@@ -28,10 +28,25 @@ const nomesUrgencia = {
   "amanha-eu-faco": "Amanhã eu faço",
 } as const;
 
-const imagensPorUrgencia: Record<Tarefa["urgencia"], string> = {
-  "vida-ou-morte": "/images/roxa.png?v=2",
-  "melhor-apressar": "/images/amarela.png?v=2",
-  "amanha-eu-faco": "/images/verde.png",
+const imagensPorUrgencia: Record<
+  Tarefa["urgencia"],
+  { original: string; pequena: string; media: string }
+> = {
+  "vida-ou-morte": {
+    original: "/images/roxa.png?v=2",
+    pequena: "/images/roxa-p.avif",
+    media: "/images/roxa-m.avif",
+  },
+  "melhor-apressar": {
+    original: "/images/amarela.png?v=2",
+    pequena: "/images/amarela-p.avif",
+    media: "/images/amarela-m.avif",
+  },
+  "amanha-eu-faco": {
+    original: "/images/verde.png",
+    pequena: "/images/verde-p.avif",
+    media: "/images/verde-m.avif",
+  },
 };
 
 export default function TarefaCard({
@@ -70,6 +85,7 @@ export default function TarefaCard({
       : descricao;
   const idMenu = `menu-tarefa-${tarefa.id}`;
   const idMenuUrgencia = `menu-urgencia-${tarefa.id}`;
+  const imagens = imagensPorUrgencia[urgenciaAtual];
 
   function iniciarEdicao() {
     setNomeEditado(tarefa.nome);
@@ -114,14 +130,21 @@ export default function TarefaCard({
         role="img"
         aria-label={`Imagem da tarefa: ${tarefa.nome}`}
       >
-        <Image
-          src={imagensPorUrgencia[urgenciaAtual]}
-          alt=""
-          fill
-          unoptimized
-          sizes="(max-width: 640px) 100vw, 34vw"
-          className={styles.tarefaCard__imagemArquivo}
-        />
+        <picture>
+          <source
+            type="image/avif"
+            srcSet={`${imagens.pequena} 640w, ${imagens.media} 1280w`}
+            sizes="(max-width: 640px) 100vw, 34vw"
+          />
+          <Image
+            src={imagens.original}
+            alt=""
+            fill
+            unoptimized
+            sizes="(max-width: 640px) 100vw, 34vw"
+            className={styles.tarefaCard__imagemArquivo}
+          />
+        </picture>
       </div>
 
       <div className={styles.tarefaCard__conteudo}>
