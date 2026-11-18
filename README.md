@@ -20,6 +20,40 @@ Acesse o FunTasks: [https://fun-tasks-pi.vercel.app/](https://fun-tasks-pi.verce
 
 As tarefas iniciais vêm de `app/data/tarefasMockadas.ts`. A lista de tarefas é salva no `localStorage` do navegador, então as alterações continuam disponíveis após recarregar a página no mesmo navegador. O projeto ainda não usa banco de dados nem sincroniza os dados entre dispositivos ou navegadores.
 
+## Otimização de performance
+
+Foram realizadas as seguintes melhorias:
+
+- Conversão das imagens dos cards para AVIF, com versões de 640 px e 1280 px e seleção responsiva pelo navegador.
+- Adição da metadescrição da página.
+- Remoção da animação contínua do fundo da lista de tarefas.
+- Atualização do Next.js para a versão 16.4.6 e do React para a versão 19.3.1.
+
+### Comparativo Lighthouse
+
+**Dispositivo Mobile: Antes → Depois**
+
+- Performance: 93 → 98
+- TBT: 320 ms → 140 ms
+- LCP: 1,8 s → 1,7 s
+- CLS: 0 → 0
+- SEO: 91 → 100
+
+**Dispositivo Desktop: Antes → Depois**
+
+- Performance: 100 → 100
+- TBT: 30 ms → 0 ms
+- LCP: 0,4 s → 0,4 s
+- CLS: 0 → 0
+- SEO: 91 → 100
+
+Os principais resultados foram a redução do trabalho da thread principal no mobile e a melhoria do SEO. Os relatórios completos estão disponíveis em:
+
+- [Relatório Lighthouse mobile - antes](relatorios/lighthouse-mobile-antes.pdf)
+- [Relatório Lighthouse mobile - depois](relatorios/lighthouse-mobile-depois.pdf)
+- [Relatório Lighthouse desktop - antes](relatorios/lighthouse-desktop-antes.pdf)
+- [Relatório Lighthouse desktop - depois](relatorios/lighthouse-desktop-depois.pdf)
+
 ## Requisitos
 
 - Node.js 24 e npm instalados.
